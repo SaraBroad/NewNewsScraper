@@ -30,6 +30,12 @@ app.use('/', routes);
 
 
 mongoose.connect("mongodb://localhost/NewsScraper");
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+    // we're connected!
+});
+
 
 app.listen(PORT, function() {
     console.log("Server listening on: http://localhost:" + PORT);
