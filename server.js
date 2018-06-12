@@ -25,6 +25,8 @@ app.use(bodyParser.json());
 // var router = require('./controllers/controller.js');
 // app.use('/', router);
 
+var routes = require('./controllers/controller');
+app.use('/', routes);
 
 
 mongoose.connect("mongodb://localhost/NewsScraper");
