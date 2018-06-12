@@ -1,0 +1,27 @@
+#news {
+    font-size: 26px;
+    font-family: 'Bitter', serif;
+    color: #FFFFFF;
+}
+
+.container-fluid {
+    background-color: #E6320B;
+}
+
+img {
+    height: 300px;
+    width: 100%;
+    border: 0;
+}
+
+#photo {
+    z-index: 0;
+}
+
+h1 {
+    position: absolute;
+    font-family: 'Bitter', serif;
+    font-size: 100px;
+    left: 20%;
+    top: 20%;
+}
