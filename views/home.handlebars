@@ -31,11 +31,18 @@
 <div class="panel panel-default">
     {{#each Article}}
     <div class="panel-heading">
-        {{this.title}}
-        <button type="submit" class="btn btn-default save-btn">Save Article</button>
+        <div id="title-results">
+            {{this.title}}
+            <button type="submit" class="btn btn-default save-btn">Save Article</button>
+        </div>
     </div>
     <div class="panel-body">
-        {{this.summary}}
+        <div id="summary-results">
+            {{this.summary}}
+        </div>
+        <div id="link-results">
+            {{this.link}}
+        </div>
     </div>
     {{/each}}
 </div>
