@@ -19,16 +19,17 @@ module.exports = function (app) {
             var $ = cheerio.load(response.data);
             $(".media__content").each(function (i, element) {
                 var result = {};
-                result.title = $(element).children('h3').children("a").text();
-                result.link = $(element).children("a").attr("href");
-                result.summary = $(element).children("p").text();
+                result.title = ("Title: " + $(element).children('h3').children("a").text());
+                result.link = ("Link: " + $(element).children("h3").children("a").attr("href"));
+                result.summary = ("Summary: " + $(element).children("p").text());
+                console.log(result);
 
                 db.Article.create(result)
                     .then(function (dbArticle) {
                         console.log(dbArticle)
-                        // var hbsArticlesObject = {
-                        //     article: result
-                        // };
+                        var hbsArticlesObject = {
+                            article: result
+                        };
                     }).catch(function (err) {
                         console.log(err);
                     });
@@ -39,6 +40,10 @@ module.exports = function (app) {
         })
     })
 
+
+
+
+    
     app.get("/articles", function (req, res) {
         db.Article.find({}, function (error, found) {
             if (error) {

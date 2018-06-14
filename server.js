@@ -22,6 +22,7 @@ app.set("view engine", "handlebars");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+
 var routes = require('./controllers/controller')(app);
 
 
@@ -29,7 +30,7 @@ mongoose.connect("mongodb://localhost/NewsScraper");
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
-    // we're connected!
+    console.log("We're connected")
 });
 
 

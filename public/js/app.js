@@ -1,8 +1,7 @@
 
 $(document).on('click', '#scrape-btn', function() {
-    console.log('clicked');
     $.getJSON("/scrape", function (data) {
-        console.log(data);
+        // console.log(data);
         for (var i = 0; i < data.length; i++) {
             $("#articles").append("title-results" + data[i].title + "summary-results" + data[i].summary + "link-results" + data[i].link)
         }
