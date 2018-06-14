@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 var routes = require('./controllers/controller')(app);
 
 
-mongoose.connect("mongodb://localhost/NewsScraper");
+mongoose.connect("mongodb://localhost/NewNewsScraper");
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {

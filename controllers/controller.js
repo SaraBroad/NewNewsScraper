@@ -1,5 +1,7 @@
-var Note = require('../models/Note.js');
-var Article = require('../models/Article.js');
+// var Note = require('../models/Note.js');
+// var Article = require('../models/Article.js');
+var db = require("../models")
+
 var express = require('express');
 var request = require('request');
 var cheerio = require('cheerio');
@@ -15,30 +17,6 @@ module.exports = function (app) {
         res.render("home");
     });
 
-    // app.get("/scrape", function (req, res) {
-    //     axios.get("https://www.bbc.com").then(function (response) {
-    //         var $ = cheerio.load(response.data);
-    //         $(".media__content").each(function (i, element) {
-    //             var result = {};
-    //             result.title = ("Title: " + $(element).children('h3').children("a").text());
-    //             result.link = ("Link: " + $(element).children("h3").children("a").attr("href"));
-    //             result.summary = ("Summary: " + $(element).children("p").text());
-    //             console.log(result);
-    //             db.Article.create(result)
-    //                 .then(function (dbArticle) {
-    //                     console.log(dbArticle)
-    //                     var hbsArticlesObject = {
-    //                         article: result
-    //                     };
-    //                 }).catch(function (err) {
-    //                     console.log(err);
-    //                 });
-    //         });
-    //         // res.render("home", hbsArticlesObject);
-    //         res.json({});
-    //     });
-    // });
-
     app.get("/scrape", function (req, res) {
         axios.get("https://www.bbc.com").then(function (response) {
             var $ = cheerio.load(response.data);
@@ -47,35 +25,23 @@ module.exports = function (app) {
                 result.title = ("Title: " + $(element).children('h3').children("a").text());
                 result.link = ("Link: " + $(element).children("h3").children("a").attr("href"));
                 result.summary = ("Summary: " + $(element).children("p").text());
-                var scrapedArticle = new Article(result);
-                scrapedArticle.save(function(err, working){
-                    if (err) {
-                        console.log(err) 
-                    } else {
-                        console.log(working)
-                                    var hbsArticlesObject = {
+                console.log(result);
+                var article = new db.Article()
+                db.Article.create(result)
+            
+                    .then(function (dbArticle) {
+                        console.log(dbArticle)
+                        var hbsArticlesObject = {
                             article: result
                         };
-                    }
-                });
-                // db.Article.create(result)
-                //     .then(function (dbArticle) {
-                //         console.log(dbArticle)
-                //         var hbsArticlesObject = {
-                //             article: result
-                //         };
-                //     }).catch(function (err) {
-                //         console.log(err);
-                //     });
-         
+                    }).catch(function (err) {
+                        console.log(err);
+                    });
             });
             // res.render("home", hbsArticlesObject);
             res.json({});
         });
     });
-
-
-
     
     app.get("/articles", function (req, res) {
         db.Article.find({}, function (error, found) {
@@ -88,7 +54,7 @@ module.exports = function (app) {
                 // res.render("home", hbsArticlesObject);
             }
         });
-        res.send("All articles")
+        res.render("saved", hbsArticleObject)
     });
 
     app.get("/articles/:id", function (req, res) {
@@ -121,7 +87,7 @@ module.exports = function (app) {
     });
 
     app.get("/delete/:id", function (req, res) {
-        Note.findOneAndRemove({ "_id": req.params.id }, function (err, remove) {
+        db.Note.findOneAndRemove({ "_id": req.params.id }, function (err, remove) {
             if (err) {
                 console.log("Article removal error")
             } else {
