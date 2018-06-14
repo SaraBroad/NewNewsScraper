@@ -1,4 +1,5 @@
-var db = require("../models");
+var Note = require('../models/Note.js');
+var Article = require('../models/Article.js');
 var express = require('express');
 var request = require('request');
 var cheerio = require('cheerio');
@@ -14,6 +15,30 @@ module.exports = function (app) {
         res.render("home");
     });
 
+    // app.get("/scrape", function (req, res) {
+    //     axios.get("https://www.bbc.com").then(function (response) {
+    //         var $ = cheerio.load(response.data);
+    //         $(".media__content").each(function (i, element) {
+    //             var result = {};
+    //             result.title = ("Title: " + $(element).children('h3').children("a").text());
+    //             result.link = ("Link: " + $(element).children("h3").children("a").attr("href"));
+    //             result.summary = ("Summary: " + $(element).children("p").text());
+    //             console.log(result);
+    //             db.Article.create(result)
+    //                 .then(function (dbArticle) {
+    //                     console.log(dbArticle)
+    //                     var hbsArticlesObject = {
+    //                         article: result
+    //                     };
+    //                 }).catch(function (err) {
+    //                     console.log(err);
+    //                 });
+    //         });
+    //         // res.render("home", hbsArticlesObject);
+    //         res.json({});
+    //     });
+    // });
+
     app.get("/scrape", function (req, res) {
         axios.get("https://www.bbc.com").then(function (response) {
             var $ = cheerio.load(response.data);
@@ -22,24 +47,32 @@ module.exports = function (app) {
                 result.title = ("Title: " + $(element).children('h3').children("a").text());
                 result.link = ("Link: " + $(element).children("h3").children("a").attr("href"));
                 result.summary = ("Summary: " + $(element).children("p").text());
-                console.log(result);
-
-                db.Article.create(result)
-                    .then(function (dbArticle) {
-                        console.log(dbArticle)
+                var scrapedArticle = new Article(result);
+                scrapedArticle.save(function(err, working){
+                    if (err) {
+                        console.log(err) 
+                    } else {
+                        console.log(working)
                         var hbsArticlesObject = {
-                            article: result
+                        article: result
                         };
-                    }).catch(function (err) {
-                        console.log(err);
-                    });
+                    }
+                });
+                // db.Article.create(result)
+                //     .then(function (dbArticle) {
+                //         console.log(dbArticle)
+                //         var hbsArticlesObject = {
+                //             article: result
+                //         };
+                //     }).catch(function (err) {
+                //         console.log(err);
+                //     });
+         
             });
-
             // res.render("home", hbsArticlesObject);
             res.json({});
-        })
-    })
-
+        });
+    });
 
 
 
@@ -58,16 +91,12 @@ module.exports = function (app) {
     });
 
     app.get("/articles/:id", function (req, res) {
-        // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
         db.Article.findOne({ _id: req.params.id })
-            // ..and populate all of the notes associated with it
             .populate("note")
             .then(function (dbArticle) {
-                // If we were able to successfully find an Article with the given id, send it back to the client
                 res.json(dbArticle);
             })
             .catch(function (err) {
-                // If an error occurred, send it to the client
                 res.json(err);
             });
     });
