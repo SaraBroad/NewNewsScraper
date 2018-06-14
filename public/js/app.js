@@ -14,6 +14,7 @@ $(document).on('click', '#scrape-btn', function() {
 
 
 
+
 //   <div class="panel panel-default">
 //     {{#each Article}}
 //     <div class="panel-heading">

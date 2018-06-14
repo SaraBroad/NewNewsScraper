@@ -85,9 +85,10 @@ module.exports = function (app) {
                 var hbsArticleObject = {
                     article: found
                 }
-                res.render("home", hbsArticlesObject);
+                // res.render("home", hbsArticlesObject);
             }
         });
+        res.send("All articles")
     });
 
     app.get("/articles/:id", function (req, res) {
@@ -120,7 +121,7 @@ module.exports = function (app) {
     });
 
     app.get("/delete/:id", function (req, res) {
-        db.Note.findOneAndRemove({ "_id": req.params.id }, function (err, remove) {
+        Note.findOneAndRemove({ "_id": req.params.id }, function (err, remove) {
             if (err) {
                 console.log("Article removal error")
             } else {
