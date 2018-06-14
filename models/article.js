@@ -6,18 +6,14 @@ var ArticleSchema = new Schema({
         type: String,
         required: true
     },
-
     summary: {
         type: String,
-        required: true
     },
-
     url: {
-        type: String,
-        required: true
+        type: String
     },
     note: {
-        type: Schema.Type.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Note"
     }
 });

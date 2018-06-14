@@ -22,11 +22,7 @@ app.set("view engine", "handlebars");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// var router = require('./controllers/controller.js');
-// app.use('/', router);
-
-var routes = require('./controllers/controller');
-app.use('/', routes);
+var routes = require('./controllers/controller')(app);
 
 
 mongoose.connect("mongodb://localhost/NewsScraper");
