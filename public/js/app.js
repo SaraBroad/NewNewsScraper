@@ -14,7 +14,7 @@ $(document).on('click', "btn", function(){
         method: "POST",
         url: "/articles/" + thisId,
         data: {
-            note: $("input-comment").val();
+            note: $("input-comment").val()
         }
     })
     .then(function(data){

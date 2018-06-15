@@ -44,17 +44,19 @@
                 {{this.link}}
             </div>
         </div>
-        <form action="/articles/{{_id}} method=" POST ">
+        <form action="/articles/{{_id}} method="POST">
             <div class="form-group ">
                 <label for="input-comment ">Leave note</label>
-                <input type="text " class="form-control " id="input-comment ">
-                <button type="submit " class="btn btn-default ">Submit</button>
+                <input type="text" class="form-control " id="input-comment">
+                <button type="submit" class="note-btn btn-default">Submit</button>
             </div>
         </form>
         {{#if Note}}
             {{#each Note}}
+            <button action="/delete/{{_id}}" method="DELETE" class="delete-btn btn-default">Delete</button>
+            {{/each}}
         {{/if}}
-        {{/each}}
+        {}
     </div>
     {{/each}}
 </div>
