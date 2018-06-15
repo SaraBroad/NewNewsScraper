@@ -8,7 +8,7 @@ $(document).on('click', '#scrape-btn', function() {
     });
 })
 
-$(document).on('click', "btn", function(){
+$(document).on('click', "note-btn", function(){
     var thisId = $(this).attr("data-id");
     $.ajax({
         method: "POST",
@@ -20,4 +20,15 @@ $(document).on('click', "btn", function(){
     .then(function(data){
         console.log(data);
      });
+});
+
+$(document).on("click", "delete-btn", function(){
+    var thisId = $(this).attr("data-id");
+    $.ajax({
+        method: "DELETE",
+        url: "/delete/" + this.Id,
+    })
+    .then(function(){
+        console.log("deleted")
+    });
 });
