@@ -3,11 +3,11 @@ var Schema = mongoose.Schema;
 
 var NoteSchema = new Schema({
     text: {
-        type: String,
-        required: true
+        type: String
     },
-    lastUpdated: {
-        type: Date
+    date: {
+        type: Date,
+        default: Date.now
     }
 });
 
