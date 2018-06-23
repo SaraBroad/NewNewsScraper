@@ -38,8 +38,8 @@ module.exports = function (app) {
                         console.log(err);
                     });
             });
-            // res.render("home", hbsArticlesObject);
-            res.json({});
+            res.render("home", hbsArticlesObject);
+            // res.json({});
         });
     });
     
